@@ -1,6 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const WarpSection = () => {
+  const navigate = useNavigate()
+
+  const handleDownloadWarpClick = () => {
+    navigate('/warp-steps')
+  }
+
   return (
     <div id="warp" className="group relative">
       <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
@@ -51,7 +58,10 @@ const WarpSection = () => {
         </div>
 
         {/* CTA Button */}
-        <button className="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/25">
+        <button 
+          onClick={handleDownloadWarpClick}
+          className="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/25"
+        >
           Download Warp
         </button>
 

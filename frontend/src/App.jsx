@@ -4,6 +4,7 @@ import CursorSection from './components/CursorSection'
 import WarpSection from './components/WarpSection'
 import WindsurfSection from './components/WindsurfSection'
 import CursorStepsPage from './components/CursorStepsPage'
+import WarpStepsPage from './components/WarpStepsPage'
 
 // Home Page Component
 const HomePage = () => {
@@ -11,6 +12,10 @@ const HomePage = () => {
 
   const handleCursorClick = () => {
     navigate('/cursor-steps')
+  }
+
+  const handleWarpClick = () => {
+    navigate('/warp-steps')
   }
 
   return (
@@ -29,8 +34,8 @@ const HomePage = () => {
             </div>
             <nav className="hidden md:flex space-x-8">
               <button onClick={handleCursorClick} className="text-gray-300 hover:text-blue-400 transition-colors">Cursor</button>
-              <a href="#warp" className="text-gray-300 hover:text-blue-400 transition-colors">Warp</a>
-              <a href="#windsurf" className="text-gray-300 hover:text-blue-400 transition-colors">Windsurf</a>
+              <button onClick={handleWarpClick} className="text-gray-300 hover:text-green-400 transition-colors">Warp</button>
+              <a href="#windsurf" className="text-gray-300 hover:text-purple-400 transition-colors">Windsurf</a>
             </nav>
           </div>
         </div>
@@ -70,7 +75,9 @@ const HomePage = () => {
             <div onClick={handleCursorClick} className="cursor-pointer">
               <CursorSection />
             </div>
-            <WarpSection />
+            <div onClick={handleWarpClick} className="cursor-pointer">
+              <WarpSection />
+            </div>
             <WindsurfSection />
           </div>
         </div>
@@ -95,6 +102,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/cursor-steps" element={<CursorStepsPage />} />
+        <Route path="/warp-steps" element={<WarpStepsPage />} />
       </Routes>
     </Router>
   )
