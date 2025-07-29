@@ -1,9 +1,18 @@
 import React from 'react'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 import CursorSection from './components/CursorSection'
 import WarpSection from './components/WarpSection'
 import WindsurfSection from './components/WindsurfSection'
+import CursorStepsPage from './components/CursorStepsPage'
 
-function App() {
+// Home Page Component
+const HomePage = () => {
+  const navigate = useNavigate()
+
+  const handleCursorClick = () => {
+    navigate('/cursor-steps')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
       {/* Header */}
@@ -19,7 +28,7 @@ function App() {
               </h1>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <a href="#cursor" className="text-gray-300 hover:text-blue-400 transition-colors">Cursor</a>
+              <button onClick={handleCursorClick} className="text-gray-300 hover:text-blue-400 transition-colors">Cursor</button>
               <a href="#warp" className="text-gray-300 hover:text-blue-400 transition-colors">Warp</a>
               <a href="#windsurf" className="text-gray-300 hover:text-blue-400 transition-colors">Windsurf</a>
             </nav>
@@ -58,7 +67,9 @@ function App() {
       <section className="py-20 px-6 relative z-10">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <CursorSection />
+            <div onClick={handleCursorClick} className="cursor-pointer">
+              <CursorSection />
+            </div>
             <WarpSection />
             <WindsurfSection />
           </div>
@@ -74,6 +85,18 @@ function App() {
         </div>
       </footer>
     </div>
+  )
+}
+
+// Main App Component with Routing
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/cursor-steps" element={<CursorStepsPage />} />
+      </Routes>
+    </Router>
   )
 }
 

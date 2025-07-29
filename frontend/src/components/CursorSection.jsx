@@ -1,6 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const CursorSection = () => {
+  const navigate = useNavigate()
+
+  const handleTryCursorClick = () => {
+    navigate('/cursor-steps')
+  }
+
   return (
     <div id="cursor" className="group relative">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
@@ -51,7 +58,10 @@ const CursorSection = () => {
         </div>
 
         {/* CTA Button */}
-        <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
+        <button 
+          onClick={handleTryCursorClick}
+          className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
+        >
           Try Cursor Free
         </button>
 
