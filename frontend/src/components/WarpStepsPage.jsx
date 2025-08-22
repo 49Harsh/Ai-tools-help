@@ -26,65 +26,68 @@ const WarpStepsPage = () => {
     },
     {
       title: "Step 3: Clean WARP Data and Services",
-      description: "Run this PowerShell command as administrator to stop WARP service and remove all data:",
+      description: "Run this PowerShell command as administrator to search and remove all Warp leftovers:",
       type: "command",
-      command: `# Stop WARP service if running
-Write-Host "Stopping Cloudflare WARP service..."
-Stop-Service -Name "CloudflareWARP" -ErrorAction SilentlyContinue
-
-# Define paths to delete
-$paths = @(
-    "$env:ProgramData\\Cloudflare",
-    "$env:ProgramData\\Cloudflare WARP",
-    "$env:LOCALAPPDATA\\Cloudflare",
-    "$env:APPDATA\\Cloudflare",
-    "$env:ProgramFiles\\Cloudflare",
-    "$env:ProgramFiles(x86)\\Cloudflare"
+      command: `# Search common locations for Warp leftovers
+$searchPaths = @(
+  "C:\\Program Files",
+  "C:\\Program Files (x86)",
+  "$env:LOCALAPPDATA",
+  "$env:APPDATA",
+  "C:\\Users\\Public"
 )
 
-# Delete folders if they exist
-foreach ($path in $paths) {
-    if (Test-Path $path) {
-        Write-Host "Deleting: $path"
-        Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
-    }
-}
-
-# Optional: Uninstall Cloudflare WARP
-Write-Host "Checking for Cloudflare WARP installation..."
-$warpApp = Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name LIKE '%Cloudflare WARP%'" -ErrorAction SilentlyContinue
-if ($warpApp) {
-    Write-Host "Uninstalling Cloudflare WARP..."
-    $warpApp.Uninstall()
-} else {
-    Write-Host "Cloudflare WARP not found in installed applications."
-}
-
-Write-Host "WARP data and installation removed. Restart your computer if necessary." -ForegroundColor Green`
+foreach ($sp in $searchPaths) {
+    Write-Output "Searching $sp for Warp files..."
+    Get-ChildItem -Path $sp -Recurse -Force -ErrorAction SilentlyContinue -Include *Warp* |
+        ForEach-Object {
+            try {
+                Write-Output "Deleting: $($_.FullName)"
+                Remove-Item -Path $_.FullName -Recurse -Force
+            } catch {
+                Write-Output "Could not delete: $($_.FullName) - $($_.Exception.Message)"
+            }
+        }
+}`
     },
     {
-      title: "Step 4: Verify Cleanup",
-      description: "Check if any files are not deleted by running this verification script:",
+      title: "Step 4: Clean Warp Registry Entries",
+      description: "Run this PowerShell command as Administrator to remove Warp-related registry keys:",
       type: "command",
-      command: `# Define common WARP data paths
-$paths = @(
-    "$env:ProgramData\\Cloudflare",
-    "$env:ProgramData\\Cloudflare WARP",
-    "$env:LOCALAPPDATA\\Cloudflare",
-    "$env:APPDATA\\Cloudflare",
-    "$env:ProgramFiles\\Cloudflare",
-    "$env:ProgramFiles(x86)\\Cloudflare"
+      command: `# Run in PowerShell as Administrator
+
+$warpKeys = @(
+  "HKCU:\\Software\\Warp",
+  "HKLM:\\SOFTWARE\\Warp",
+  "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Warp*",
+  "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Warp*",
+  "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+  "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
 )
 
-# Check each path and list files if found
-foreach ($path in $paths) {
-    if (Test-Path $path) {
-        Write-Host "\\n[+] Data found at: $path" -ForegroundColor Yellow
-        Get-ChildItem -Path $path -Recurse | Select-Object FullName
-    } else {
-        Write-Host "[-] No data at: $path" -ForegroundColor Green
+foreach ($key in $warpKeys) {
+    try {
+        # Find matching keys
+        $matches = Get-ItemProperty -Path $key -ErrorAction SilentlyContinue | Out-String
+        if ($matches -match "Warp") {
+            Write-Output "Deleting registry key: $key"
+            Remove-Item -Path $key -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    } catch {}
+}
+
+# Extra: search entire registry for "Warp" (this takes time)
+Write-Output "Searching registry for 'Warp' entries..."
+Get-ChildItem -Path HKCU:\\, HKLM:\\ -Recurse -ErrorAction SilentlyContinue |
+    Where-Object { $_.Name -match "Warp" } |
+    ForEach-Object {
+        try {
+            Write-Output "Deleting: $($_.Name)"
+            Remove-Item -Path $_.PsPath -Recurse -Force -ErrorAction SilentlyContinue
+        } catch {}
     }
-}`
+
+Write-Output "Warp registry cleanup completed!"`
     },
     {
       title: "Step 5: Get Temporary Email",
