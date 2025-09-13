@@ -25,7 +25,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       {/* Header */}
       <header className="relative z-10">
         <div className="container mx-auto px-6 py-8">
@@ -51,11 +51,14 @@ const HomePage = () => {
       {/* Hero Section */}
       <section className="relative py-20 px-6">
         <div className="container mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Discover the Future of AI
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Free AI API Providers 2024
+          </h1>
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-200">
+            Access GPT-4, Claude, Llama & Premium AI Models for FREE
           </h2>
-          <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            Explore cutting-edge AI tools that revolutionize how you code, create, and collaborate
+          <p className="text-xl text-gray-300 mb-12 max-w-4xl mx-auto">
+            Discover the top 8 best free AI API providers offering OpenRouter, Groq, Together AI, Hugging Face, and more. Get started with premium artificial intelligence models without any credit card required. Perfect for developers, researchers, and AI enthusiasts.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105">
@@ -75,6 +78,69 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* SEO Content Section */}
+      <section className="py-16 px-6 bg-gray-800/20">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+              Why Choose Free AI APIs in 2024?
+            </h2>
+            <p className="text-lg text-gray-300 leading-relaxed">
+              Free AI API providers have revolutionized access to cutting-edge artificial intelligence. From OpenRouter's GPT-4 access to Groq's lightning-fast inference, these platforms democratize AI development for everyone.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <article className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/30">
+              <h3 className="text-xl font-semibold mb-3 text-blue-400">🚀 No Credit Card Required</h3>
+              <p className="text-gray-300 text-sm">
+                Start building immediately with free AI APIs from OpenRouter, Groq, Together AI, and Hugging Face. Access premium models like GPT-4, Claude 3.5 Sonnet, and Llama 3.1 without any payment information.
+              </p>
+            </article>
+            
+            <article className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/30">
+              <h3 className="text-xl font-semibold mb-3 text-green-400">⚡ Lightning Fast Inference</h3>
+              <p className="text-gray-300 text-sm">
+                Experience blazing-fast AI responses with Groq's LPU technology, Together AI's optimized infrastructure, and Replicate's efficient model serving. Perfect for real-time applications and high-throughput scenarios.
+              </p>
+            </article>
+            
+            <article className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/30">
+              <h3 className="text-xl font-semibold mb-3 text-purple-400">🤖 Premium AI Models</h3>
+              <p className="text-gray-300 text-sm">
+                Access state-of-the-art models including GPT-4 Turbo, Claude 3.5 Sonnet, Llama 3.1 405B, Mixtral 8x7B, Gemini Pro, and more. Build sophisticated AI applications with the latest language and multimodal models.
+              </p>
+            </article>
+          </div>
+          
+          <div className="text-center">
+            <h3 className="text-2xl font-bold mb-4 text-white">
+              Top Free AI API Providers Comparison 2024
+            </h3>
+            <div className="bg-gray-800/20 backdrop-blur-sm border border-gray-700/20 rounded-xl p-6 max-w-5xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                  <div className="text-3xl font-bold text-blue-400">8+</div>
+                  <div className="text-sm text-gray-300">Free AI Providers</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-green-400">50+</div>
+                  <div className="text-sm text-gray-300">AI Models Available</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-purple-400">100%</div>
+                  <div className="text-sm text-gray-300">Free to Start</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-orange-400">24/7</div>
+                  <div className="text-sm text-gray-300">API Availability</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* AI Tools Grid */}
       <section className="py-20 px-6 relative z-10">
         <div className="container mx-auto">
@@ -84,12 +150,8 @@ const HomePage = () => {
               <FreeAIAPIsCard />
             </div>
             
-            <div onClick={handleCursorClick} className="cursor-pointer">
-              <CursorSection />
-            </div>
-            <div onClick={handleWarpClick} className="cursor-pointer">
-              <WarpSection />
-            </div>
+            <CursorSection />
+            <WarpSection />
             <WindsurfSection />
           </div>
         </div>
@@ -97,10 +159,72 @@ const HomePage = () => {
 
       {/* Footer */}
       <footer className="border-t border-gray-800 py-12 px-6">
-        <div className="container mx-auto text-center">
-          <p className="text-gray-400">
-            © 2024 AI Tools Hub. Built with modern technologies and AI innovation.
-          </p>
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-4">AI Tools Hub</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Your ultimate destination for discovering the best free AI API providers in 2024. Access premium AI models without any cost.
+              </p>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  <span className="sr-only">Twitter</span>🐦
+                </a>
+                <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors">
+                  <span className="sr-only">GitHub</span>🐙
+                </a>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="text-md font-semibold text-white mb-4">Free AI APIs</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="https://openrouter.ai" className="text-gray-400 hover:text-blue-400 transition-colors" target="_blank" rel="noopener">OpenRouter Free</a></li>
+                <li><a href="https://groq.com" className="text-gray-400 hover:text-green-400 transition-colors" target="_blank" rel="noopener">Groq API Free</a></li>
+                <li><a href="https://together.ai" className="text-gray-400 hover:text-purple-400 transition-colors" target="_blank" rel="noopener">Together AI Free</a></li>
+                <li><a href="https://huggingface.co" className="text-gray-400 hover:text-yellow-400 transition-colors" target="_blank" rel="noopener">Hugging Face API</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-md font-semibold text-white mb-4">AI Models</h4>
+              <ul className="space-y-2 text-sm">
+                <li><span className="text-gray-400">GPT-4 Free API</span></li>
+                <li><span className="text-gray-400">Claude 3.5 Sonnet</span></li>
+                <li><span className="text-gray-400">Llama 3.1 405B</span></li>
+                <li><span className="text-gray-400">Mixtral 8x7B</span></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-md font-semibold text-white mb-4">Resources</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#free-apis" className="text-gray-400 hover:text-blue-400 transition-colors">Free API List</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-green-400 transition-colors">API Documentation</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-purple-400 transition-colors">AI Tools Guide</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-400 transition-colors">Getting Started</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-800 pt-8 text-center">
+            <p className="text-gray-400 text-sm mb-4">
+              © 2024 AI Tools Hub. Discover the best free AI API providers including OpenRouter, Groq, Together AI, Hugging Face, and more. Built for developers, researchers, and AI enthusiasts.
+            </p>
+            <div className="flex flex-wrap justify-center gap-6 text-xs text-gray-500">
+              <span>Free AI APIs</span>
+              <span>•</span>
+              <span>OpenRouter Free</span>
+              <span>•</span>
+              <span>Groq API</span>
+              <span>•</span>
+              <span>GPT-4 Free</span>
+              <span>•</span>
+              <span>Claude API</span>
+              <span>•</span>
+              <span>Llama Free</span>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
@@ -112,7 +236,7 @@ const NotFound = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white flex items-center justify-center">
       <div className="text-center">
         <h1 className="text-6xl font-bold text-blue-400 mb-4">404</h1>
         <h2 className="text-2xl font-semibold mb-6">Page Not Found</h2>

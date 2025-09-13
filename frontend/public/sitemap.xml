@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  
+  <!-- Homepage - Free AI API Providers 2024 -->
+  <url>
+    <loc>https://help-aii.netlify.app/</loc>
+    <lastmod>2024-12-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://help-aii.netlify.app/ai-apis-preview.jpg</image:loc>
+      <image:title>Free AI API Providers 2024 - OpenRouter, Groq, Together AI</image:title>
+      <image:caption>Discover the best free AI API providers offering GPT-4, Claude, Llama, and premium AI models</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Cursor AI Tool Page -->
+  <url>
+    <loc>https://help-aii.netlify.app/cursor-steps</loc>
+    <lastmod>2024-12-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Warp AI Tool Page -->
+  <url>
+    <loc>https://help-aii.netlify.app/warp-steps</loc>
+    <lastmod>2024-12-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Free AI APIs Section -->
+  <url>
+    <loc>https://help-aii.netlify.app/#free-apis</loc>
+    <lastmod>2024-12-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+</urlset>

@@ -1,0 +1,54 @@
+# AI Tools Hub - Free AI API Providers 2024
+# https://help-aii.netlify.app/
+
+User-agent: *
+Allow: /
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.well-known/
+Disallow: /api/private/
+
+# Allow important resources
+Allow: /src/
+Allow: /assets/
+Allow: /images/
+Allow: /css/
+Allow: /js/
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://help-aii.netlify.app/sitemap.xml
+
+# Additional directives for better SEO
+# Encourage crawling of free AI API content
+Allow: /*free-ai-api*
+Allow: /*openrouter*
+Allow: /*groq*
+Allow: /*together-ai*
+Allow: /*hugging-face*
+Allow: /*claude*
+Allow: /*gpt-4*
+Allow: /*llama*

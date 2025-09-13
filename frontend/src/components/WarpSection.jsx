@@ -9,80 +9,69 @@ const WarpSection = () => {
   }
 
   return (
-    <div id="warp" className="group relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-      <div className="relative bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 h-full hover:border-green-500/50 transition-all duration-300 hover:transform hover:scale-105">
+    <div 
+      onClick={handleDownloadWarpClick}
+      className="group relative bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-sm border border-green-500/30 rounded-2xl p-8 hover:border-green-400/50 transition-all duration-300 cursor-pointer hover:transform hover:scale-105 hover:bg-gradient-to-br hover:from-green-500/30 hover:to-emerald-500/30"
+    >
+      {/* Animated background effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-400/5 to-emerald-400/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      
+      {/* Card content */}
+      <div className="relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-white">Warp</h3>
-              <p className="text-green-400 text-sm">AI Terminal & Shell</p>
-            </div>
-          </div>
-          <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
-            <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
+          <div className="text-4xl">⚡</div>
+          <div className="flex space-x-2">
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse delay-200"></span>
+            <span className="w-2 h-2 bg-teal-400 rounded-full animate-pulse delay-500"></span>
           </div>
         </div>
+
+        {/* Title */}
+        <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-green-400 group-hover:to-emerald-400">
+          Warp Terminal
+        </h3>
 
         {/* Description */}
         <p className="text-gray-300 mb-6 leading-relaxed">
-          The modern terminal reimagined with AI. Execute commands faster, get intelligent suggestions, and collaborate seamlessly with your team in a beautiful, fast terminal experience.
+          The modern AI terminal reimagined. Execute commands faster with intelligent suggestions, real-time collaboration, and beautiful UI.
         </p>
 
-        {/* Features */}
-        <div className="space-y-3 mb-8">
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-            <span className="text-gray-300 text-sm">AI command suggestions</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-            <span className="text-gray-300 text-sm">Real-time collaboration</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-            <span className="text-gray-300 text-sm">Built-in workflows</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-            <span className="text-gray-300 text-sm">Cross-platform support</span>
-          </div>
+        {/* Features preview */}
+        <div className="flex items-center mb-6 space-x-3">
+          <div className="text-2xl">💻</div>
+          <div className="text-2xl">🤖</div>
+          <div className="text-2xl">⚡</div>
+          <div className="text-2xl">🌍</div>
+          <div className="text-lg text-gray-400 font-medium">+8 more</div>
         </div>
-
-        {/* CTA Button */}
-        <button 
-          onClick={handleDownloadWarpClick}
-          className="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/25"
-        >
-          Download Warp
-        </button>
 
         {/* Stats */}
-        <div className="mt-6 pt-6 border-t border-gray-800">
-          <div className="flex justify-between text-sm">
-            <div className="text-center">
-              <div className="text-white font-semibold">500K+</div>
-              <div className="text-gray-400">Users</div>
-            </div>
-            <div className="text-center">
-              <div className="text-white font-semibold">3</div>
-              <div className="text-gray-400">Platforms</div>
-            </div>
-            <div className="text-center">
-              <div className="text-white font-semibold">4.8★</div>
-              <div className="text-gray-400">Rating</div>
-            </div>
+        <div className="flex items-center justify-between mb-4">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-green-400">500K+</div>
+            <div className="text-xs text-gray-400">Users</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-emerald-400">3</div>
+            <div className="text-xs text-gray-400">Platforms</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-teal-400">FREE</div>
+            <div className="text-xs text-gray-400">Download</div>
           </div>
         </div>
+
+        {/* Call to action */}
+        <div className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30 rounded-lg p-3 text-center group-hover:from-green-600/30 group-hover:to-emerald-600/30 transition-all duration-300">
+          <span className="text-white font-semibold">Download Warp Terminal →</span>
+        </div>
       </div>
+
+      {/* Decorative elements */}
+      <div className="absolute top-4 right-4 w-3 h-3 bg-green-400/20 rounded-full animate-ping"></div>
+      <div className="absolute bottom-4 left-4 w-2 h-2 bg-emerald-400/30 rounded-full animate-pulse delay-1000"></div>
     </div>
   )
 }
