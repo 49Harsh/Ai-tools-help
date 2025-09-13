@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 import CursorSection from './components/CursorSection'
 import WarpSection from './components/WarpSection'
 import WindsurfSection from './components/WindsurfSection'
+import FreeAIAPIsCard from './components/FreeAIAPIsCard'
 import CursorStepsPage from './components/CursorStepsPage'
 import WarpStepsPage from './components/WarpStepsPage'
 
 // Home Page Component
 const HomePage = () => {
   const navigate = useNavigate()
+  const [showFreeAPIsModal, setShowFreeAPIsModal] = useState(false)
 
   const handleCursorClick = () => {
     navigate('/cursor-steps')
@@ -16,6 +18,10 @@ const HomePage = () => {
 
   const handleWarpClick = () => {
     navigate('/warp-steps')
+  }
+
+  const handleFreeAPIsClick = () => {
+    document.querySelector('.free-apis-card')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -33,6 +39,7 @@ const HomePage = () => {
               </h1>
             </div>
             <nav className="hidden md:flex space-x-8">
+              <button onClick={handleFreeAPIsClick} className="text-gray-300 hover:text-green-400 transition-colors">Free APIs</button>
               <button onClick={handleCursorClick} className="text-gray-300 hover:text-blue-400 transition-colors">Cursor</button>
               <button onClick={handleWarpClick} className="text-gray-300 hover:text-green-400 transition-colors">Warp</button>
               <a href="#windsurf" className="text-gray-300 hover:text-purple-400 transition-colors">Windsurf</a>
@@ -71,7 +78,12 @@ const HomePage = () => {
       {/* AI Tools Grid */}
       <section className="py-20 px-6 relative z-10">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+            {/* Free AI APIs Card */}
+            <div className="free-apis-card">
+              <FreeAIAPIsCard />
+            </div>
+            
             <div onClick={handleCursorClick} className="cursor-pointer">
               <CursorSection />
             </div>
