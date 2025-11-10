@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 const WarpStepsPage = () => {
   const [copiedIndex, setCopiedIndex] = useState(null)
+  const [selectedCleanType, setSelectedCleanType] = useState('fast') // 'fast' or 'deep'
 
   const copyToClipboard = async (text, index) => {
     try {
@@ -52,9 +53,78 @@ foreach ($sp in $searchPaths) {
     },
     {
       title: "Step 4: Clean Warp Registry Entries",
-      description: "Run this PowerShell command as Administrator to remove Warp-related registry keys:",
-      type: "command",
-      command: `# Run in PowerShell as Administrator
+      description: "Choose between Fast Clean (recommended, quick) or Deep Clean (time-consuming). Run the selected PowerShell command as Administrator:",
+      type: "dualCommand",
+      fastCommand: `# Run in PowerShell as Administrator
+Write-Host "Starting Fast Warp Registry Cleanup..." -ForegroundColor Cyan
+
+# Specific known locations (Fast)
+$warpKeys = @(
+    "HKCU:\\Software\\Warp",
+    "HKLM:\\SOFTWARE\\Warp",
+    "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Warp*",
+    "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Warp*",
+    "HKCU:\\Software\\WOW6432Node\\Warp",
+    "HKLM:\\SOFTWARE\\WOW6432Node\\Warp"
+)
+
+$deleted = 0
+foreach ($key in $warpKeys) {
+    try {
+        if (Test-Path $key) {
+            Write-Host "Deleting: $key" -ForegroundColor Yellow
+            Remove-Item -Path $key -Recurse -Force -ErrorAction Stop
+            $deleted++
+        }
+    } catch {
+        Write-Host "Failed to delete: $key" -ForegroundColor Red
+    }
+}
+
+# Check Run keys for Warp entries
+$runKeys = @(
+    "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
+)
+
+foreach ($runKey in $runKeys) {
+    try {
+        $props = Get-ItemProperty -Path $runKey -ErrorAction SilentlyContinue
+        $props.PSObject.Properties | Where-Object { $_.Name -match "Warp" -and $_.Name -ne "PSPath" } | ForEach-Object {
+            Write-Host "Removing Run entry: $($_.Name)" -ForegroundColor Yellow
+            Remove-ItemProperty -Path $runKey -Name $_.Name -Force -ErrorAction Stop
+            $deleted++
+        }
+    } catch {}
+}
+
+# Limited targeted search (only likely locations - Much Faster)
+$targetPaths = @(
+    "HKCU:\\Software",
+    "HKLM:\\SOFTWARE",
+    "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall",
+    "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+)
+
+Write-Host "\nSearching common locations for Warp entries..." -ForegroundColor Cyan
+
+foreach ($path in $targetPaths) {
+    try {
+        Get-ChildItem -Path $path -ErrorAction SilentlyContinue -Depth 1 |
+            Where-Object { $_.PSChildName -match "Warp" } |
+            ForEach-Object {
+                try {
+                    Write-Host "Deleting: $($_.PSPath)" -ForegroundColor Yellow
+                    Remove-Item -Path $_.PSPath -Recurse -Force -ErrorAction Stop
+                    $deleted++
+                } catch {}
+            }
+    } catch {}
+}
+
+Write-Host "\n=== Cleanup Complete ===" -ForegroundColor Green
+Write-Host "Total items deleted: $deleted" -ForegroundColor Green`,
+      deepCommand: `# Run in PowerShell as Administrator
 
 $warpKeys = @(
   "HKCU:\\Software\\Warp",
@@ -209,6 +279,76 @@ Write-Output "Warp registry cleanup completed!"`
                           </div>
                           <pre className="text-green-400 font-mono text-sm whitespace-pre-wrap overflow-x-auto">
                             {step.command}
+                          </pre>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Dual Command - Fast and Deep Clean */}
+                    {step.type === "dualCommand" && (
+                      <div className="space-y-4">
+                        {/* Toggle Buttons */}
+                        <div className="flex gap-3">
+                          <button
+                            onClick={() => setSelectedCleanType('fast')}
+                            className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
+                              selectedCleanType === 'fast'
+                                ? 'bg-gradient-to-r from-green-600 to-blue-700 text-white shadow-lg shadow-blue-500/50'
+                                : 'bg-gray-800/50 text-gray-400 hover:bg-gray-700/50'
+                            }`}
+                          >
+                            ⚡ Fast Clean
+                          </button>
+                          <button
+                            onClick={() => setSelectedCleanType('deep')}
+                            className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
+                              selectedCleanType === 'deep'
+                                ? 'bg-gradient-to-r from-yellow-600 to-orange-700 text-white shadow-lg shadow-orange-500/50'
+                                : 'bg-gray-800/50 text-gray-400 hover:bg-gray-700/50'
+                            }`}
+                          >
+                            🔍 Deep Clean
+                          </button>
+                        </div>
+
+                        {/* Command Display */}
+                        <div className="bg-gray-800/50 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center space-x-2">
+                              {selectedCleanType === 'fast' ? (
+                                <>
+                                  <span className="text-blue-400 text-sm font-bold">⚡ Fast Clean (Recommended)</span>
+                                  <span className="text-gray-500 text-xs">(Quick cleanup)</span>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="text-orange-400 text-sm font-bold">🔍 Deep Clean (Time Taking)</span>
+                                  <span className="text-gray-500 text-xs">(Thorough scan)</span>
+                                </>
+                              )}
+                            </div>
+                            <button
+                              onClick={() => copyToClipboard(
+                                selectedCleanType === 'fast' ? step.fastCommand : step.deepCommand,
+                                `${selectedCleanType}-${index}`
+                              )}
+                              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                              title="Copy to clipboard"
+                            >
+                              {copiedIndex === `${selectedCleanType}-${index}` ? (
+                                <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              ) : (
+                                <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                  <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                </svg>
+                              )}
+                            </button>
+                          </div>
+                          <pre className={`${selectedCleanType === 'fast' ? 'text-blue-400' : 'text-orange-400'} font-mono text-sm whitespace-pre-wrap overflow-x-auto`}>
+                            {selectedCleanType === 'fast' ? step.fastCommand : step.deepCommand}
                           </pre>
                         </div>
                       </div>
